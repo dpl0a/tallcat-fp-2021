@@ -126,7 +126,7 @@ getLines = do
 -- it to obtain an executable. When run, "dictate" should
 -- read lines until the user enters "done", then prompt
 -- the user for the name of a file to store those lines in.
--- If the user enters "non", the lines are instead thrown
+-- If the user enters "none", the lines are instead thrown
 -- away. If the user enters a valid file name, then the
 -- program should attempt to store the lines of user 
 -- input as a file with that name. A message realying
