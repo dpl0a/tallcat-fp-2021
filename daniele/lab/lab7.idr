@@ -1,3 +1,6 @@
+-- Lab 7:
+
+-- Some helper functions: 
 data CoNat : Type where
   Zero : CoNat
   Succ : (n : Inf CoNat) -> CoNat
@@ -25,12 +28,21 @@ natStream = nats_helper 0 where
 infinity : CoNat
 infinity = Succ infinity
 
--- Task 1
+plus : CoNat -> CoNat -> CoNat
+plus Zero y = y
+plus (Succ n) y = Succ (plus n y)
+
+makePair : a -> b -> (a, b)
+makePair x y = (x, y)
+
+
+
+-- Task 1:
 length : CoList a -> CoNat
 length [] = Zero
 length (x :: xs) = Succ (length xs)
 
--- Task 2
+-- Task 2:
 drop : Nat -> CoList a -> CoList a
 drop Z x = x
 drop (S k) [] = []
@@ -43,27 +55,28 @@ filter f (x :: xs) = if f x then x :: (filter f xs) else (filter f xs)
 -- λΠ> filter isEven nats' 
 -- this doesn't terminate
 
--- Task 4
+-- Task 4:
 zipStream : (a -> b -> c) -> Stream a -> Stream b -> Stream c
 zipStream f xs ys = (f (head xs) (head ys)) :: (zipStream f (tail xs) (tail ys))
 
--- Task 5
+-- Task 5:
 zipStreamList : (a -> b -> c) -> Stream a -> List b -> List c
 zipStreamList f xs [] = []
 zipStreamList f xs (x :: ys) = (f (head xs) x) :: (zipStreamList f (tail xs) ys)
 
--- Task 6
-makePair : a -> b -> (a, b)
-makePair x y = (x, y)
-
+-- Task 6:
 enumerate : List a -> List (Pair Nat a)
 enumerate xs = zipStreamList makePair natStream xs
 
--- Task 7 
+-- Task 7:
 minus : CoNat -> CoNat -> CoNat
 minus Zero y = Zero
 minus (Succ n) Zero = Succ n
 minus (Succ n) (Succ x) = minus n x
 
 -- Task 8
-TODO
+times : CoNat -> CoNat -> CoNat
+times x Zero = Zero
+times x (Succ y) = plus x (times x y)
+-- λΠ> times infinity infinity
+-- Succ (Delay (plus infinity (times (Succ (Delay infinity)) infinity))) : CoNat
