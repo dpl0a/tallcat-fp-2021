@@ -115,7 +115,5 @@ implementation [setwise] Eq a => Eq (List a) where
 implementation [multisetwise] Eq a => Eq (List a) where
   (==) [] [] = True
   (==) [] _ = False
-  (==) _ [] = False
-  (==) (x :: xs) ys = (xs == (delete x ys))
--- Ugly but seems to work and uses only one of the suggested functions
+  (==) (x :: xs) ys = if elem x ys then (xs == (delete x ys)) else False
 -- TODO: Write a prettier one
